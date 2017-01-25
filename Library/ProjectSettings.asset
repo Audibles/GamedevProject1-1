@@ -457,7 +457,7 @@ PlayerSettings:
     Collab: 0
     ErrorHub: 0
     Hub: 0
-    UNet: 0
+    UNet: 1
   cloudProjectId: 40d1ada0-7947-459e-ae0e-f3913d2c5c7d
   projectName: GameCraft Project 1
   organizationId: audibl
