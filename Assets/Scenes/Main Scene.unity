@@ -948,7 +948,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  littleMario: {fileID: 0}
+  littleMario: {fileID: 1451007499}
 --- !u!58 &1451007505
 CircleCollider2D:
   m_ObjectHideFlags: 0

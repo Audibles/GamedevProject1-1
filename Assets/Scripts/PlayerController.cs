@@ -67,11 +67,11 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate() {
         anim.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
         anim.SetFloat("vSpeed", Mathf.Abs(rb.velocity.y));
-        /* Make Mario switch directions!
-         * 
-         * YOUR CODE HERE
-         * 
-         */
+		if (Input.GetAxis ("Horizontal") > 0 && !facingRight) {
+			Flip ();
+		} else if (Input.GetAxis ("Horizontal") < 0 && facingRight) {
+			Flip ();
+		}
         myState.FixedUpdate();
         if (nextState != null)
         {
@@ -256,7 +256,8 @@ public class PlayerController : MonoBehaviour {
              * 
              * YOUR CODE HERE.
              * 
-             */ 
+             */
+			rb.AddForce(new Vector2(0, jumpForce));
             anim.SetBool("Jumping", true);
         }
 
@@ -266,7 +267,9 @@ public class PlayerController : MonoBehaviour {
              * 
              * YOUR CODE HERE.
              * 
-             */ 
+             */
+			moveX = Input.GetAxis("Horizontal");
+			moveJump = Input.GetAxis("Jump");
         }
 
         public void FixedUpdate()
@@ -284,6 +287,12 @@ public class PlayerController : MonoBehaviour {
              * YOUR CODE HERE.
              * 
              */
+			if (moveX < maxSpeed) {
+				rb.AddForce(new Vector2(airHorizAcceleration * moveX, 0));
+			}
+			if (jumpingTime > 0) {
+				rb.AddForce(new Vector2(0, airJumpAcceleration * moveJump));
+			}
             /* Continuously check that you haven't hit the ground. If
              * you have, then transition to the 'Grounded' state.*/
             if (controller.CheckForGround())
