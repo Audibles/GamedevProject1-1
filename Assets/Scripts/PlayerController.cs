@@ -257,7 +257,9 @@ public class PlayerController : MonoBehaviour {
              * YOUR CODE HERE.
              * 
              */
-			rb.AddForce(new Vector2(0, jumpForce));
+			if (moveJump != 0) {
+				rb.AddForce(new Vector2(0, jumpForce));
+			}
             anim.SetBool("Jumping", true);
         }
 
@@ -291,7 +293,7 @@ public class PlayerController : MonoBehaviour {
 				rb.AddForce(new Vector2(airHorizAcceleration * moveX, 0));
 			}
 			if (jumpingTime > 0) {
-				rb.AddForce(new Vector2(0, airJumpAcceleration * moveJump));
+				rb.AddForce (new Vector2 (0, airJumpAcceleration * moveJump));
 			}
             /* Continuously check that you haven't hit the ground. If
              * you have, then transition to the 'Grounded' state.*/
