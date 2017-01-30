@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour {
          * the next state. */
         public PlayerState HandleInput()
         {
-            if (Input.GetButton("Jump"))
+			if (Input.GetButton("Jump") || Input.GetButton("Fire1"))
             {
                 jump = true;
                 return new Jumping(controller);
@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour {
         float maxSpeed;
         float airHorizAcceleration = 5;
         float airJumpAcceleration = 13;
+		float sneeze;
 
         public Jumping(PlayerController controller)
         {
@@ -252,6 +253,7 @@ public class PlayerController : MonoBehaviour {
         {
             moveJump = Input.GetAxis("Jump");
             moveX = Input.GetAxis("Horizontal");
+			sneeze = Input.GetAxis("Fire1");
             /* Add the preliminary jump force.
              * 
              * YOUR CODE HERE.
@@ -259,6 +261,10 @@ public class PlayerController : MonoBehaviour {
              */
 			if (moveJump != 0) {
 				rb.AddForce(new Vector2(0, jumpForce));
+			}
+			else if (sneeze != 0) {
+				rb.AddForce (new Vector2 (0, jumpForce + 300));
+				Debug.Log ("I sneezed");
 			}
             anim.SetBool("Jumping", true);
         }
@@ -272,6 +278,7 @@ public class PlayerController : MonoBehaviour {
              */
 			moveX = Input.GetAxis("Horizontal");
 			moveJump = Input.GetAxis("Jump");
+			sneeze = Input.GetAxis("Fire1");
         }
 
         public void FixedUpdate()
@@ -294,6 +301,9 @@ public class PlayerController : MonoBehaviour {
 			}
 			if (jumpingTime > 0) {
 				rb.AddForce (new Vector2 (0, airJumpAcceleration * moveJump));
+			}
+			if (jumpingTime > 0 && sneeze != 0) {
+				rb.AddForce (new Vector2 (0, (airJumpAcceleration * sneeze)));
 			}
             /* Continuously check that you haven't hit the ground. If
              * you have, then transition to the 'Grounded' state.*/
